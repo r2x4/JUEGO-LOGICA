@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juego de Lógica Politecnico Grancolombiano</title>
+  <style>
+    body {
+        background-image: url("https://img.freepik.com/vector-premium/fondo-tecnologia-negocios-negocios_29865-2940.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+    }
+
+    #game-container {
+      margin: 50px;
+    }
+
+    #question-container {
+      font-size: 25px;
+      margin-bottom: 20px;
+    }
+
+    #options-container {
+      display: flex;
+      justify-content: center;
+    }
+
+    .option-button {
+      font-size: 25px;
+      padding: 10px;
+      margin:  15px;
+      cursor: pointer;
+    }
+
+    #result-container {
+      margin-top: 20px;
+      font-size: 25px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="game-container">
+    <div id="question-container"></div>
+    <div id="options-container"></div>
+    <button onclick="calcularPorcentaje()">Calcular Porcentaje</button>
+    <div id="result-container"></div>
+  </div>
+
+  <script>
+    const preguntas = [
+    {
+        pregunta: "¿Cuál es el Pais mas ganador de copas Mundo de Futbol?",
+        opciones: ["Alemania", "Italia", "Brazil", "Argentina"],
+        respuestaCorrecta: "Brazil"
+      },
+      {
+        pregunta: "¿Cuál es la capital de Francia?",
+        opciones: ["Madrid", "Berlín", "París", "Londres"],
+        respuestaCorrecta: "París"
+      },
+      {
+        pregunta: "¿Cual es el rio mas largo del mundo?",
+        opciones: ["Nilo", "Misisipi", "Amazonas", "Magdalena"],
+        respuestaCorrecta: "Nilo"
+      },
+      {
+        pregunta: "¿En qué año fue la independencia de Estados Unidos?",
+        opciones: ["1776", "1789", "1801", "1820"],
+        respuestaCorrecta: "1776"
+      },
+      {
+        pregunta: "¿En que pais se encuetra la piramide de Keops ?",
+        opciones: ["Israel", "Egipto", "Argelia", "Arabia Saudita"],
+        respuestaCorrecta: "Egipto"
+      },
+      {
+        pregunta: "¿En que pais se encuetra el Taj Mahal?",
+        opciones: ["India", "China", "Japon", "Suiza"],
+        respuestaCorrecta: "India"
+      },
+      {
+        pregunta: "¿En que pais se encuetra el Mausoleo de Halicarnaso?",
+        opciones: ["Turquia", "Grecia", "Italia", "Egipto"],
+        respuestaCorrecta: "Turquia"
+      },
+      {
+        pregunta: "¿En que pais se encuetra el arco del triunfo?",
+        opciones: ["Alemania", "Polonia", "Francia", "Bulgaria"],
+        respuestaCorrecta: "Francia"
+      },
+      {
+        pregunta: "¿En que pais se encuetra el Templo de Artemisa en Éfeso?",
+        opciones: ["Turquia", "Grecia", "Italia", "Egipto"],
+        respuestaCorrecta: "Turquia"
+      },
+      {
+        pregunta: "¿En que pais se encuetra el Coloso de Rodas?",
+        opciones: ["Japon", "Grecia", "Italia", "Mexico"],
+        respuestaCorrecta: "Grecia"
+      },
+      {
+        pregunta: "¿Cuál es la capital  musical de Colombia?",
+        opciones: ["Pereira", "Cali", "Neiva", "Ibague"],
+        respuestaCorrecta: "Ibague"
+      },
+      {
+        pregunta: "¿En que pais se encuetra el Faro de Alejandría?",
+        opciones: ["Turquia", "Grecia", "Italia", "Egipto"],
+        respuestaCorrecta: "Grecia"
+      },
+    ];
+    function generateRandomQuestions() {
+      const allQuestions = [
+
+      ];
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(preguntas);
+
+    return allQuestions.slice(0, 4);
+    }
+
+    const preguntasQuiz = generateRandomQuestions();
+
+    let indicePreguntaActual = 0;
+    let respuestasCorrectas = 0;
+
+    function cargarPregunta() {
+      const preguntaActual = preguntas[indicePreguntaActual];
+      document.getElementById('question-container').innerHTML = preguntaActual.pregunta;
+
+      const opcionesContainer = document.getElementById('options-container');
+      opcionesContainer.innerHTML = "";
+
+      preguntaActual.opciones.forEach(opcion => {
+        const button = document.createElement('button');
+        button.className = 'option-button';
+        button.innerHTML = opcion;
+        button.onclick = () => verificarRespuesta(opcion);
+        opcionesContainer.appendChild(button);
+      });
+    }
+
+    function verificarRespuesta(respuesta) {
+      const preguntaActual = preguntas[indicePreguntaActual];
+      if (respuesta === preguntaActual.respuestaCorrecta) {
+        respuestasCorrectas++;
+      }
+
+      indicePreguntaActual++;
+
+      if (indicePreguntaActual < preguntas.length) {
+        cargarPregunta();
+      } else {
+        mostrarResultado();
+      }
+    }
+
+    function mostrarResultado() {
+      const resultContainer = document.getElementById('result-container');
+      const porcentajeCorrecto = (respuestasCorrectas / preguntas.length) * 100;
+      resultContainer.innerHTML = `¡Juego completado!<br>Tu porcentaje de respuestas correctas es: ${porcentajeCorrecto.toFixed(2)}%`;
+    }
+
+    function calcularPorcentaje() {
+      mostrarResultado();
+    }
+
+    cargarPregunta();
+  </script>
+
+</body>
+</html>
